@@ -1,22 +1,22 @@
-import knex from "knex";
+import knex from 'knex'
 
 export async function up(knex: knex) {
-  return knex.schema.createTable("classes", (table) => {
-    table.increments("id").primary();
+  return knex.schema.createTable('classes', table => {
+    table.increments('id').primary()
 
-    table.string("subject").notNullable();
-    table.decimal("cost").notNullable();
+    table.string('subject').notNullable()
+    table.decimal('cost').notNullable()
 
     table
-      .integer("user_id")
+      .integer('user_id')
       .notNullable()
-      .references("id")
-      .inTable("users")
-      .onUpdate("CASCADE")
-      .onDelete("CASCADE");
-  });
+      .references('id')
+      .inTable('users')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE')
+  })
 }
 
 export async function down(knex: knex) {
-  return knex.schema.dropTable("classes");
+  return knex.schema.dropTable('classes')
 }
