@@ -1,11 +1,11 @@
 {
-  "name": "server",
+  "name": "proffy-api",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=production npm run build && node --optimize_for_size --max_old_space_size=920 --gc_interval=100 dist/server.js",
-    "dev": "NODE_ENV=development tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "start": "NODE_ENV=production npm run build && node --optimize_for_size dist/index.js",
+    "dev": "NODE_ENV=development tsnd --transpile-only --ignore-watch node_modules --respawn src/index.ts",
     "build": "babel src --out-dir dist --copy-files --extensions '.ts,.js'",
     "migrate": "knex --knexfile knexfile.ts migrate:latest",
     "rollback": "knex --knexfile knexfile.ts migrate:rollback"
