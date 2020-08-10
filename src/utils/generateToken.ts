@@ -7,8 +7,8 @@ export interface Options {
 }
 
 export default function generateToken(options: Options) {
-  const { id, email } = options
-  return jwt.sign({ id, email }, process.env.SECRET as string, {
+  const { id, email, password } = options
+  return jwt.sign({ id, email, password }, process.env.SECRET as string, {
     expiresIn: '1d',
   })
 }

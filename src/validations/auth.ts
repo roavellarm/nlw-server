@@ -1,4 +1,9 @@
-import { isEmail, hasPasswordRequirements, isUser } from '../utils'
+import {
+  isEmail,
+  hasPasswordRequirements,
+  isUser,
+  validateEmailAndPassword,
+} from '../utils'
 
 interface Data {
   name: string
@@ -43,4 +48,19 @@ export async function registerValidation(data: Data) {
   const user = await isUser(email)
   if (user) errors.push('User already registered')
   return { errors }
+}
+
+export async function loginValidation(data: Data) {
+  const errors = []
+  const { email, password } = data
+  if (!email) errors.push('Email is required')
+  if (!password) errors.push('Password is required')
+  if (errors.length) return { errors }
+
+  if (!isEmail(email)) errors.push('Invalid email')
+
+  const user = await validateEmailAndPassword(email, password)
+  if (!user) errors.push('Email or password incorrect')
+
+  return { errors, user }
 }
