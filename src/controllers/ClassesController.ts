@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import db from '../database/connection'
-import convertHoursToMinutes from '../utils/convertHourToMinutes'
+import { convertHoursToMinutes } from '../utils'
 
 interface ScheduleItem {
   week_day: number
