@@ -8,17 +8,15 @@ interface ScheduleItem {
   to: string
 }
 
-async function index(request: Request, response: Response) {
-  const filters = request.query
+async function index(req: Request, res: Response) {
+  const filters = req.query
 
   const subject = filters.subject as string
   const week_day = filters.week_day as string
   const time = filters.time as string
 
   if (!filters.week_day || !filters.subject || !filters.time) {
-    return response
-      .status(400)
-      .json({ error: 'Missing filters to search classes' })
+    return res.status(400).json({ error: 'Missing filters to search classes' })
   }
 
   const timeInMinutes = convertHoursToMinutes(time)
@@ -36,11 +34,11 @@ async function index(request: Request, response: Response) {
     .join('users', 'classes.user_id', '=', 'users.id')
     .select(['classes.*', 'users.*'])
 
-  return response.json(classes)
+  return res.json(classes)
 }
 
-async function create(request: Request, response: Response) {
-  const { name, avatar, whatsapp, bio, subject, cost, schedule } = request.body
+async function create(req: Request, res: Response) {
+  const { name, avatar, whatsapp, bio, subject, cost, schedule } = req.body
 
   const trx = await db.transaction()
 
@@ -75,14 +73,13 @@ async function create(request: Request, response: Response) {
 
     await trx.commit()
 
-    return response.status(201).send()
+    return res.status(201).send()
   } catch (error) {
     await trx.rollback()
 
-    return response.status(400).json({
-      error: 'Unexpected error while creating new class',
-      err: error,
-    })
+    return res
+      .status(400)
+      .json({ error: 'Unexpected error while creating new class' })
   }
 }
 

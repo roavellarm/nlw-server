@@ -5,7 +5,7 @@ import ConnectionsController from './controllers/ConnectionsController'
 
 const routes = Router()
 
-routes.get('/', (request, response) => response.send({ message: 'Proffy API' }))
+routes.get('/', (req, res) => res.send({ message: 'Proffy API' }))
 
 routes.post('/login', AuthController.login)
 routes.post('/register', AuthController.register)
